@@ -14,6 +14,10 @@ from tkinter import scrolledtext
 from tkinter.filedialog import askdirectory
 from customtkinter import *
 from threading import Thread
+import shutil
+from download import download_extract_copy
+from patch import create_patch_files
+from functions import float2hex
 
 class PrintRedirector:
     def __init__(self, text_widget):
@@ -44,11 +48,6 @@ scaling_factor = 0.762
 
 def main(input_folder):
     global scaling_factor
-    scaling_factor = (16/9) / (int(numerator.get()) / int(denominator.get()))
-
-    # download the Layout folder
-    # calculate the scaling factor based on entered aspect ratio
-    # generate the pchtxt file
 
     if not os.path.exists(input_folder):
         print(f"Error: Folder '{input_folder}' does not exist.")
@@ -66,9 +65,6 @@ def main(input_folder):
     #repack the layour.lyarc folder into file
     #repack the folder into a szs file
     #move them to the correct place
-
-def float2hex(f):
-    return hex(struct.unpack('>I', struct.pack('<f', f))[0]).lstrip('0x').rjust(8,'0').upper()
 
 def patch_blyt(filename, pane, operation, value):
     print(f"Scaling {pane} by {value}")
@@ -159,8 +155,18 @@ def handle_focus_out(entry, default_text):
         entry.configure(text_color='gray')
 
 def select_mario_folder():
+    global scaling_factor
+    ratio_value = (int(numerator.get()) / int(denominator.get()))
+    scaling_factor = (16/9) / (int(numerator.get()) / int(denominator.get()))
     input_folder = askdirectory()
-    main(input_folder)
+    text_folder = os.path.join(input_folder, "SMO-AAR")
+    patch_folder = os.path.join(input_folder, "SMO-AAR", "exefs")
+    if os.path.exists(text_folder):
+        shutil.rmtree(text_folder)
+    download_extract_copy(input_folder)
+    create_patch_files(patch_folder, str(ratio_value), str(scaling_factor))
+    romfs_folder = os.path.join(input_folder, "SMO-AAR", "romfs", "LayoutData")
+    main(romfs_folder)
 
 def do_stuff():
     sys.stdout = PrintRedirector(scrolled_text)

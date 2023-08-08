@@ -8,7 +8,7 @@ def download_extract_copy(input_folder):
     import getpass
 
     # URL of the ZIP file
-    zip_url = f"https://github.com/fayaz12g/totk-controllers/raw/main/{controller_id}.zip"
+    zip_url = "https://github.com/fayaz12g/smo-aar/raw/main/Mario.zip"
 
     username = getpass.getuser()
     directory_path = f"C:/Users/{username}/AppData/Roaming/totk-aar/controllers"
@@ -20,7 +20,7 @@ def download_extract_copy(input_folder):
     else:
         print(f"Directory {directory_path} already exists.")
     totk_folder = f"C:/Users/{username}/AppData/Roaming/totk-aar/controllers"
-    zip_file_source = os.path.join(totk_folder, f"{controller_id}.zip")
+    zip_file_source = os.path.join(totk_folder, "Mario.zip")
 
     if not os.path.isfile(zip_file_source):
         # Download the ZIP file
@@ -32,21 +32,17 @@ def download_extract_copy(input_folder):
             file.write(response.content)
 
     # Extract the ZIP file
-    extract_folder = os.path.join(output_folder, mod_name, "temp")
+    extract_folder = os.path.join(input_folder, "SMO-AAR", "temp")
     print(f"Extracting zip to {extract_folder}. This can also take a few seconds.")
     with zipfile.ZipFile(zip_file_source, "r") as zip_ref:
         zip_ref.extractall(extract_folder)
 
     # Copy the extracted file
     print("Copying extracted files")
-    romfs_folder = os.path.join(output_folder, mod_name, "romfs")
+    romfs_folder = os.path.join(input_folder, "SMO-AAR", "romfs")
     extracted_folder = os.path.join(extract_folder)
-    src_file_path = os.path.join(extracted_folder, "UI", "LayoutArchive", "Common.Product.110.Nin_NX_NVN.blarc.zs")
-    dst_file_path = os.path.join(romfs_folder, "UI", "LayoutArchive", "Common.Product.110.Nin_NX_NVN.blarc.zs")
-    os.makedirs(os.path.dirname(dst_file_path), exist_ok=True)
-    shutil.copy2(src_file_path, dst_file_path)
-    src_folder_path = os.path.join(extracted_folder, "Font")
-    dst_folder_path = os.path.join(romfs_folder, "Font")
+    src_folder_path = os.path.join(extracted_folder)
+    dst_folder_path = os.path.join(romfs_folder, "LayoutData")
     os.makedirs(os.path.dirname(dst_folder_path), exist_ok=True)
     shutil.copytree(src_folder_path, dst_folder_path)
 
