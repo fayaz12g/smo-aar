@@ -38,6 +38,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         offset_dict = {'shift_x': 0x40, 'shift_y': 0x48, 'scale_x': 0x70, 'scale_y': 0x78} 
         modified_name = filename + "_name"
         full_path_of_file = file_paths.get(modified_name)
+        print(f"{full_path_of_file}")
         with open(full_path_of_file, 'rb') as f:
             content = f.read().hex()
         start_rootpane = content.index(b'RootPane'.hex())
@@ -63,7 +64,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
     blyt_folder = os.path.abspath(os.path.join(unpacked_folder))
     file_names_stripped = []
    
-    do_not_scale_rootpane = ['N/A']
+    do_not_scale_rootpane = ['BootLoading', 'ContinueLoading', 'CounterMiss', 'FadeWhite', 'FadeBlack', 'IconHardKeyParts', 'IconBalloonParts']
 
     for root, dirs, files in os.walk(blyt_folder):
         for file_name in files:
