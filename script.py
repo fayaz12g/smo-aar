@@ -45,7 +45,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         start_pane = content.index(pane_hex, start_rootpane)
         idx = start_pane + offset_dict[operation]
         content_new = content[:idx] + float2hex(value) + content[idx+8:]
-        with open(full_path, 'wb') as f:
+        with open(full_path_of_file, 'wb') as f:
             f.write(bytes.fromhex(content_new))
 
 
