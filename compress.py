@@ -1,6 +1,8 @@
 import os
 import sys
 import time
+import libyaz0
+import SarcLib
 
 
 def pack_folder_to_blarc(folder_path, output_file):
@@ -47,8 +49,6 @@ def pack(root, endianness, level, outname):
 
             print(f"Repacking {filename}")
             
-            if filename == "timg/__Combined.bntx":
-                print("Writing file. Please wait. This step takes the longest (5-10 seconds).")
 
             fullname = ''.join([root, "/", filename])
 

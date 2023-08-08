@@ -35,7 +35,7 @@ def create_patch_files(patch_folder, ratio_value, scaling_factor):
 {replacement_value} {hex_value}
 @stop
 
-// Generated using TOTK-AAR by Fayaz (github.com/fayaz12g/totk-aar)'''
+// Generated using SMO-AAR by Fayaz (github.com/fayaz12g/smo-aar)'''
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
         with open(file_path, 'w') as patch_file:
             patch_file.write(patch_content)
