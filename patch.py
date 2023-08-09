@@ -7,7 +7,9 @@ import math
 
 from functions import calculate_rounded_ratio, convert_asm_to_arm64_hex, float2hex
 
-def create_patch_files(patch_folder, ratio_value, scaling_factor):
+def create_patch_files(patch_folder, ratio_value, scaling_factor, visual_fixes):
+    visual_fixesa = visual_fixes[0]
+    visual_fixesb = visual_fixes[1]
     scaling_factor = float(scaling_factor)
     ratio_value = float(ratio_value)
     print(f"The scaling factor is {scaling_factor}.")
@@ -22,10 +24,12 @@ def create_patch_files(patch_folder, ratio_value, scaling_factor):
         if version_variable == "1.0.0":
             nsobidid = "3CA12DFAAF9C82DA064D1698DF79CDA100000000"
             replacement_value = "009CF340"
+            visual_fix = visual_fixesa
 
         elif version_variable == "1.3.0":
             nsobidid = "B424BE150A8E7D78701CBE7A439D9EBF"
             replacement_value = "0074D2EC"
+            visual_fix = visual_fixesb
 
         patch_content = f'''@nsobid-{nsobidid}
 
@@ -34,6 +38,8 @@ def create_patch_files(patch_folder, ratio_value, scaling_factor):
 @enabled
 {replacement_value} {hex_value}
 @stop
+
+{visual_fix}
 
 // Generated using SMO-AAR by Fayaz (github.com/fayaz12g/smo-aar)'''
         os.makedirs(os.path.dirname(file_path), exist_ok=True)

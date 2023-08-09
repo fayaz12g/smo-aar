@@ -37,6 +37,7 @@ import sys
 import shutil
 import requests
 import psutil
+from visuals import create_visuals
 
 #######################
 #### Create Window ####
@@ -59,27 +60,9 @@ windowtitle = customtkinter.CTkLabel(master=root, font=(CTkFont, 20), text="Faya
 # Visuals
 ar_numerator = StringVar(value="16")
 ar_denominator = StringVar(value="9")
-do_cutscene_fix = BooleanVar()
-do_disable_fsr = BooleanVar()
-do_DOF = BooleanVar()
-do_chuck = BooleanVar()
 do_disable_fxaa = BooleanVar()
-do_disable_reduction = BooleanVar(value=True)
-do_disable_ansiotropic = BooleanVar()
-do_force_trilinear = BooleanVar()
 do_disable_dynamicres = BooleanVar()
-do_dynamicfps = BooleanVar(value=True)
-custom_fps = StringVar(value="60")
-custom_shadow = StringVar(value="-1")
-custom_height = StringVar(value="2160")
-custom_width = StringVar(value="3840")
-camera_mod = BooleanVar()
-do_camera = BooleanVar()
-lod_improve = BooleanVar(value=True)
-remove_flare = BooleanVar()
-staticfps = StringVar()
-shadow_quality = StringVar()
-res_multiplier = StringVar()
+do_screenshot = StringVar()
 
 
 # Legacy Visuals
@@ -105,7 +88,6 @@ button_layout = StringVar()
 # HUD
 centered_HUD = BooleanVar()
 corner_HUD = BooleanVar(value=True)
-expand_shutter = BooleanVar(value=False)
 
 # Generation
 output_yuzu = BooleanVar()
@@ -341,6 +323,12 @@ def select_mario_folder():
         return
     text_folder = os.path.join(input_folder, mod_name)
     patch_folder = os.path.join(input_folder, mod_name, "exefs")
+    if corner_HUD.get() == True:
+        print("Corner HUD")
+        HUD_pos = "corner"
+    if centered_HUD.get() == True:
+        print("Center HUD")
+        HUD_pos = "center"
     # Clean up the working directory
     if os.path.exists(text_folder):
         shutil.rmtree(text_folder)
@@ -349,7 +337,8 @@ def select_mario_folder():
     download_extract_copy(input_folder, mod_name)
 
     # Create the PCHTXT Files
-    create_patch_files(patch_folder, str(ratio_value), str(scaling_factor))
+    visual_fixes = create_visuals(do_screenshot.get(), do_disable_fxaa.get(), do_disable_dynamicres.get())
+    create_patch_files(patch_folder, str(ratio_value), str(scaling_factor), visual_fixes)
     romfs_folder = os.path.join(input_folder, mod_name, "romfs", "LayoutData")
 
     # Decomperss SZS and Lyarc Files
@@ -398,41 +387,8 @@ def pack_widgets():
     aspect_ratio_divider.pack(side="left")
     denominator_entry.pack(side="left")
     
-    reduction_checkbox.pack(padx=5, pady=5)
-    lod_checkbox.pack(padx=6, pady=6)
     fxaa_checkbox.pack(padx=5, pady=5)
-    fsr_checkbox.pack(padx=5, pady=5)
-    cameraspeed_checkbox.pack(padx=6, pady=6)
-    flare_checkbox.pack(padx=6, pady=6)
-    DOF_checkbox.pack(padx=5, pady=5)
-    fxaa_checkbox.pack(padx=5, pady=5)
-    trilinear_checkbox.pack(padx=5, pady=5)
-    dynamicfps_label.pack(pady=(10, 0))
-    dynamicfps_checkbox.pack()
-
-    if do_dynamicfps.get() is True:
-        resolution_label.pack(pady=(10, 0))
-        frame2.pack()
-        res_denominator_entry.pack(side="left")
-        res_numerator_label.pack(side="left")
-        res_numerator_entry.pack(side="left")
-        shadow_label.pack()
-        shadow_entry.pack()
-        FPS_label.pack()
-        FPS_entry.pack()
-        camera_checkbox.pack(pady=10)
-        
-    # Legacy Visuals
-    legacy_label.pack(padx=10, pady=10)
-    res_multiplier_label.pack(padx=6, pady=6)
-    res_multiplier_dropdown.pack(padx=6, pady=6)
-    staticfps_label.pack(padx=6, pady=6)
-    staticfps_dropdown.pack(padx=6, pady=6)
-    shadowres_label.pack(padx=6, pady=6)
-    shadowres_dropdown.pack(padx=6, pady=6)
-    chuck_checkbox.pack(padx=10, pady=10)
-    cutscene_checkbox.pack(padx=10, pady=10)
-    ansiotropic_checkbox.pack(padx=10, pady=10)
+    screenshot_checkbox.pack(padx=5, pady=5)
     dynamicres_checkbox.pack(padx=10, pady=10)
     
     image_label.pack()
@@ -459,7 +415,6 @@ def pack_widgets():
     hud_label.pack()
     center_checkbox.pack()
     corner_checkbox.pack(padx=10, pady=10) 
-    shutter_checkbox.pack(padx=20, pady=20)
 
     emulator_label.pack(pady=10)
     yuzu_checkbox.pack(side="top")
@@ -494,42 +449,9 @@ def forget_packing():
     aspect_ratio_divider.pack_forget()
     denominator_entry.pack_forget()
     
-    fsr_checkbox.pack_forget()
-    DOF_checkbox.pack_forget()
     fxaa_checkbox.pack_forget()
-    reduction_checkbox.pack_forget()
-    ansiotropic_checkbox.pack_forget()
-    trilinear_checkbox.pack_forget()
+    screenshot_checkbox.pack_forget()
     dynamicres_checkbox.pack_forget()
-    dynamicfps_label.pack_forget()
-    dynamicfps_checkbox.pack_forget()
-
-    legacy_label.pack_forget()
-    cutscene_checkbox.pack_forget()
-    chuck_checkbox.pack_forget()
-
-    frame2.pack_forget()
-
-    resolution_label.pack_forget()
-    res_denominator_entry.pack_forget()
-    res_numerator_label.pack_forget()
-    res_numerator_entry.pack_forget()
-    res_denominator_entry.pack_forget()
-    shadow_label.pack_forget()
-    shadow_entry.pack_forget()
-    FPS_label.pack_forget()
-    FPS_entry.pack_forget()
-    camera_checkbox.pack_forget()
-    
-    cameraspeed_checkbox.pack_forget()
-    flare_checkbox.pack_forget()
-    lod_checkbox.pack_forget()
-    res_multiplier_label.pack_forget()
-    res_multiplier_dropdown.pack_forget()
-    staticfps_label.pack_forget()
-    staticfps_dropdown.pack_forget()
-    shadowres_label.pack_forget()
-    shadowres_dropdown.pack_forget()
 
     image_label.pack_forget()
     image_layout_label.pack_forget()
@@ -551,7 +473,6 @@ def forget_packing():
     hud_label.pack_forget()
     center_checkbox.pack_forget()
     corner_checkbox.pack_forget()
-    shutter_checkbox.pack_forget()
 
     emulator_label.pack_forget()
     yuzu_checkbox.pack_forget()
@@ -605,73 +526,9 @@ denominator_entry.configure(text_color='gray')
 denominator_entry.bind("<FocusIn>", lambda event: handle_focus_in(denominator_entry, "9"))
 denominator_entry.bind("<FocusOut>", lambda event: handle_focus_out(denominator_entry, "9"))
 
-cameraspeed_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Increase Camera Speed", variable=do_camera)
-lod_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="LOD Improvement", variable=lod_improve)
-flare_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Remove Lens Flare", variable=remove_flare)
-fsr_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Disable FSR", variable=do_disable_fsr)
-DOF_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Disable Targeting DOF", variable=do_DOF)
 fxaa_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Disable FXAA", variable=do_disable_fxaa)
-reduction_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Disable Quality Reduction", variable=do_disable_reduction)
-trilinear_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Force Trilinear Over Bilinear", variable=do_force_trilinear)
-
-dynamicfps_label= customtkinter.CTkLabel(master=notebook.tab("Visuals"), text="DynamicFPS Settings:")
-dynamicfps_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Use Dynamic FPS", variable=do_dynamicfps, command=repack_widgets)
-
-resolution_label= customtkinter.CTkLabel(master=notebook.tab("Visuals"), text="Custom Resolution:")
-
-frame2 = customtkinter.CTkFrame(master=notebook.tab("Visuals"))
-
-res_denominator_entry = customtkinter.CTkEntry(frame2, textvariable=custom_width)
-res_denominator_entry.configure(text_color=("#404040", "#a9a9a9"))
-res_denominator_entry.bind("<FocusIn>", lambda event: handle_focus_in(res_denominator_entry, "3840"))
-res_denominator_entry.bind("<FocusOut>", lambda event: handle_focus_out(res_denominator_entry, "3840"))
-
-res_numerator_label= customtkinter.CTkLabel(frame2, text="x")
-
-res_numerator_entry = customtkinter.CTkEntry(frame2, textvariable=custom_height)
-res_numerator_entry.configure(text_color=("#404040", "#a9a9a9"))
-res_numerator_entry.bind("<FocusIn>", lambda event: handle_focus_in(res_numerator_entry, "2160"))
-res_numerator_entry.bind("<FocusOut>", lambda event: handle_focus_out(res_numerator_entry, "2160"))
-
-shadow_label= customtkinter.CTkLabel(master=notebook.tab("Visuals"), text="Custom Shadow Resolution (Set to -1 to scale to resolution):")
-shadow_entry = customtkinter.CTkEntry(master=notebook.tab("Visuals"), textvariable=custom_shadow)
-shadow_entry.configure(text_color=("#404040", "#a9a9a9"))
-shadow_entry.bind("<FocusIn>", lambda event: handle_focus_in(shadow_entry, "-1"))
-shadow_entry.bind("<FocusOut>", lambda event: handle_focus_out(shadow_entry, "-1"))
-
-FPS_label= customtkinter.CTkLabel(master=notebook.tab("Visuals"), text="Custom FPS:")
-FPS_entry = customtkinter.CTkEntry(master=notebook.tab("Visuals"), textvariable=custom_fps)
-FPS_entry.configure(text_color=("#404040", "#a9a9a9"))
-FPS_entry.bind("<FocusIn>", lambda event: handle_focus_in(FPS_entry, "60"))
-FPS_entry.bind("<FocusOut>", lambda event: handle_focus_out(FPS_entry, "60"))
-
-camera_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Increase Camera Quality", variable=camera_mod)
-
-custom_fps.trace("w", update_values)
-custom_shadow.trace("w", update_values)
-custom_width.trace("w", update_values)
-custom_height.trace("w", update_values)  
-custom_fps.trace("w", update_values)
-
-##############################
-####### Legacy Visuals #######
-##############################
-
-notebook.add("Legacy Visuals")
-
-legacy_label= customtkinter.CTkLabel(master=notebook.tab("Legacy Visuals"), text=f"These are not reccommended with the latest mods. \nBe sure to know what you are doing if you use any of these.")
-
-res_multiplier_label= customtkinter.CTkLabel(master=notebook.tab("Legacy Visuals"), text="Sky Island Fix (Select Multiplier)")
-res_multiplier_dropdown = customtkinter.CTkOptionMenu(master=notebook.tab("Legacy Visuals"), variable=res_multiplier, values=res_multipliers)
-staticfps_label= customtkinter.CTkLabel(master=notebook.tab("Legacy Visuals"), text="Set the Static FPS")
-staticfps_dropdown = customtkinter.CTkOptionMenu(master=notebook.tab("Legacy Visuals"), variable=staticfps, values=staticfpsoptions)
-shadowres_label= customtkinter.CTkLabel(master=notebook.tab("Legacy Visuals"), text="Set the Shadow Resolution")
-shadowres_dropdown = customtkinter.CTkOptionMenu(master=notebook.tab("Legacy Visuals"), variable=shadow_quality, values=shadow_qualities)
-
-chuck_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Legacy Visuals"), text="Use Chuck's 1008p", variable=do_chuck)
-cutscene_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Legacy Visuals"), text="Cutscene FPS Fix", variable=do_cutscene_fix)
-ansiotropic_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Legacy Visuals"), text="Anisotropic Filtering Fix", variable=do_disable_ansiotropic)
-dynamicres_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Legacy Visuals"), text="Disable Dynamic Resolution (Broken in 1.2.0)", variable=do_disable_dynamicres)
+screenshot_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Screenshot Mode Graphics (LOD Improve)", variable=do_screenshot)
+dynamicres_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("Visuals"), text="Disable Dynamic Resolution", variable=do_disable_dynamicres)
 
 ##########################
 ####### Controller #######
@@ -800,7 +657,6 @@ hud_label= customtkinter.CTkLabel(content_frame, text='Hud Location:')
 center_checkbox = customtkinter.CTkRadioButton(master=notebook.tab("HUD"), text="Center", variable=centered_HUD, value=1, command=lambda: [corner_HUD.set(False), repack_widgets])
 corner_checkbox = customtkinter.CTkRadioButton(master=notebook.tab("HUD"), text="Corner", variable=corner_HUD, value=2, command=lambda: [centered_HUD.set(False), repack_widgets])
 corner_checkbox.select()
-shutter_checkbox = customtkinter.CTkCheckBox(master=notebook.tab("HUD"), text="Hide Scope Border", variable=expand_shutter)
 
 ########################
 ####### GENERATE #######

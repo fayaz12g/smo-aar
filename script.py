@@ -88,11 +88,21 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
                 patch_blyt(name, 'RootPane', 'scale_x', s1)
 
         patch_blyt('TalkMessage', 'PicBase', 'scale_x', 1/s1)
-
+        patch_blyt('ContinueLoading', 'ParBG', 'shift_x', 1/s1) 
+        patch_blyt('BootLoading', 'ParBG', 'shift_x', 1/s1) 
+        patch_blyt('ContinueLoading', 'PicFooter', 'shift_x', 1/s1) 
+        patch_blyt('ContinueLoading', 'PicFooterBar', 'shift_x', 1/s1) 
+        patch_blyt('ContinueLoading', 'PicProgressBar', 'shift_x', 1/s1) 
+        
         
         if HUD_pos == 'corner':
             print("Shifitng elements for corner HUD")
-            # patch_anim('AppMap_00_MiniMap', 1744, 765 + 960*s3)
+            patch_blyt('MapMini', 'RootPane', 'shift_x', 960*s2) 
+            patch_blyt('CounterLife', 'RootPane', 'shift_x', 960*s2) 
+            patch_blyt('CounterCoin', 'RootPane', 'shift_x', -960*s2) 
+            patch_blyt('CounterCollectCoin', 'RootPane', 'shift_x', -960*s2) 
+            patch_blyt('CounterLifeUp', 'RootPane', 'shift_x', 960*s2) 
+            patch_blyt('CounterLifeKids', 'RootPane', 'shift_x', 960*s2) 
             
     else:
         s1 = aspect_ratio / (16/9)
