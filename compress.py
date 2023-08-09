@@ -5,13 +5,12 @@ import libyaz0
 import SarcLib
 
 
-def pack_folder_to_blarc(folder_path, output_file):
+def pack_folder_to_blarc(folder_path, output_file, level):
     """
     Pack the files and folders in the folder_path to a .blarc output_file.
     """
     root = os.path.abspath(folder_path)
     endianness = '>'
-    level = 1
 
     pack(root, endianness, level, output_file)
 

@@ -63,7 +63,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
     blyt_folder = os.path.abspath(os.path.join(unpacked_folder))
     file_names_stripped = []
    
-    do_not_scale_rootpane = ['BootLoading', 'ContinueLoading', 'CounterMiss', 'FadeWhite', 'FadeBlack', 'IconHardKeyParts', 'IconBalloonParts']
+    do_not_scale_rootpane = ['WipeCircle']
 
     for root, dirs, files in os.walk(blyt_folder):
         for file_name in files:
@@ -87,7 +87,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
             if name not in do_not_scale_rootpane:
                 patch_blyt(name, 'RootPane', 'scale_x', s1)
 
-        # patch_blyt('Aiming', 'RootPane', 'scale_x', 1/s1)
+        patch_blyt('TalkMessage', 'PicBase', 'scale_x', 1/s1)
 
         
         if HUD_pos == 'corner':

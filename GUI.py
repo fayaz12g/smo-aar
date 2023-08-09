@@ -361,17 +361,19 @@ def select_mario_folder():
     # Compress layout folders and delete them
     for root, dirs, files in os.walk(input_folder):
         if "layout" in dirs:
+            level = -1
             layout_folder_path = os.path.join(root, "layout")
             layout_lyarc_path = os.path.join(root, "layout.lyarc")
-            pack_folder_to_blarc(layout_folder_path, layout_lyarc_path)
+            pack_folder_to_blarc(layout_folder_path, layout_lyarc_path, level)
             shutil.rmtree(layout_folder_path)
     
     # Compress all remaining folders to SZS and delete them
     for dir_name in os.listdir(romfs_folder):
+        level = 1
         dir_path = os.path.join(romfs_folder, dir_name)
         if os.path.isdir(os.path.join(romfs_folder, dir_name)):
             szs_output_path = os.path.join(romfs_folder, f"{dir_name}.szs")
-            pack_folder_to_blarc(os.path.join(romfs_folder, dir_name), szs_output_path)
+            pack_folder_to_blarc(os.path.join(romfs_folder, dir_name), szs_output_path, level)
             shutil.rmtree(dir_path)
 
     print("We are done!")
