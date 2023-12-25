@@ -4,11 +4,16 @@ import os
 import keystone
 from keystone import *
 
-def convert_asm_to_arm64_hex2(asm_code):
-    import binascii
-    ks = Ks(KS_ARCH_ARM, KS_MODE_ARM)
-    encoding, _ = ks.asm(asm_code)
-    return binascii.hexlify(bytearray(encoding)).decode('utf-8').upper()
+def convert_asm_to_arm64_hex2(x):
+    p = math.floor(math.log(x, 2))
+    a = round(16*(p-2) + x / 2**(p-4))
+    if a < 0:
+        a += 128
+    a = 2*a + 1
+    h = hex(a).lstrip('0x').rjust(2, '0').upper()
+    hex_value = '00' + h[1] + '02' + h[0] + '1E' + '03'  # Hardcode register number 3 (s3)
+    print(hex_value)
+    return hex_value
 
 def convert_asm_to_arm64_hex(x):
     p = math.floor(math.log(x, 2))

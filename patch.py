@@ -20,7 +20,7 @@ def create_patch_files(patch_folder, ratio_value, scaling_factor, visual_fixes):
     asm_code = functions.generate_asm_code(rounded_ratio)
     asm_code2 = functions.generate_asm_code2(rounded_ratio)
     hex_value = functions.convert_asm_to_arm64_hex(ratio_value)
-    hex_value2 = functions.convert_asm_to_arm64_hex2(asm_code2)
+    hex_value2 = functions.convert_asm_to_arm64_hex2(ratio_value)
     version_variables = ["1.0.0", "1.2.0", "1.3.0"]
     for version_variable in version_variables:
         file_name = f"main-{version_variable}.pchtxt"
@@ -50,7 +50,7 @@ def create_patch_files(patch_folder, ratio_value, scaling_factor, visual_fixes):
 @flag offset_shift 0x100
 @enabled
 {replacement_value} {hex_value}
-{replacement2_value} {hex2_value}
+{replacement2_value} {hex_value2}
 @stop
 
 {visual_fix}
