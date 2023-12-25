@@ -1,23 +1,6 @@
 import os
 import SarcLib
 import libyaz0
-import sys
-from functions import patch_blyt
-
-def start_decompress(input_folder):
-
-    if not os.path.exists(input_folder):
-        print(f"Error: Folder '{input_folder}' does not exist.")
-        sys.exit(1)
-
-    if not os.path.isdir(input_folder):
-        print("Error: The input must be a folder path.")
-        sys.exit(1)
-
-    for file in os.listdir(input_folder):
-        if file.lower().endswith(".szs"):
-            file_path = os.path.join(input_folder, file)
-            extract_blarc(file_path, input_folder)
 
 def extract_blarc(file, output_folder):
 

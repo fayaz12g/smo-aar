@@ -1,4 +1,3 @@
-import sys
 import os
 
 def download_extract_copy(input_folder, mod_name):

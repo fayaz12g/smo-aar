@@ -10,8 +10,7 @@ from threading import Thread
 import shutil
 from download import download_extract_copy
 from patch import create_patch_files
-from functions import float2hex
-from decompress import start_decompress
+from decompress import extract_blarc
 import getpass
 from script import patch_blarc
 from PIL import Image
@@ -334,7 +333,10 @@ def select_mario_folder():
     romfs_folder = os.path.join(input_folder, mod_name, "romfs", "LayoutData")
 
     # Decomperss SZS and Lyarc Files
-    start_decompress(romfs_folder)
+    for file in os.listdir(romfs_folder):
+        if file.lower().endswith(".szs"):
+            file_path = os.path.join(romfs_folder, file)
+            extract_blarc(file_path, romfs_folder)
 
     # Perform Pane Strecthing
     patch_blarc(str(ratio_value), HUD_pos, text_folder)

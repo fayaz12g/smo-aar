@@ -1,26 +1,26 @@
 import os
-import functions
 import math
 
-def make_hex(x, r):
-    p = math.floor(math.log(x, 2))
-    a = round(16*(p-2) + x / 2**(p-4))
-    if a<0: a += 128
-    a = 2*a + 1
-    h = hex(a).lstrip('0x').rjust(2,'0').upper()
-    hex_value = f'0{r}' + h[1] + '02' + h[0] + '1E' 
-    print(hex_value)
-    return hex_value
-
 def create_patch_files(patch_folder, ratio_value, scaling_factor, visual_fixes):
+
+    def make_hex(x, r):
+        p = math.floor(math.log(x, 2))
+        a = round(16*(p-2) + x / 2**(p-4))
+        if a<0: a += 128
+        a = 2*a + 1
+        h = hex(a).lstrip('0x').rjust(2,'0').upper()
+        hex_value = f'0{r}' + h[1] + '02' + h[0] + '1E' 
+        print(hex_value)
+        return hex_value
+
     visual_fixesa = visual_fixes[0]
     visual_fixesb = visual_fixes[1]
     visual_fixesc = visual_fixes[2]
     scaling_factor = float(scaling_factor)
     ratio_value = float(ratio_value)
     print(f"The scaling factor is {scaling_factor}.")
-    hex_value = functions.make_hex(ratio_value, 0)
-    hex_value2 = functions.make_hex(ratio_value, 3)
+    hex_value = make_hex(ratio_value, 0)
+    hex_value2 = make_hex(ratio_value, 3)
     version_variables = ["1.0.0", "1.2.0", "1.3.0"]
     for version_variable in version_variables:
         file_name = f"main-{version_variable}.pchtxt"
@@ -48,6 +48,7 @@ def create_patch_files(patch_folder, ratio_value, scaling_factor, visual_fixes):
 
 @flag print_values
 @flag offset_shift 0x100
+
 @enabled
 {replacement_value} {hex_value}
 {replacement2_value} {hex_value2}
