@@ -645,7 +645,7 @@ button_color_dropdown = customtkinter.CTkOptionMenu(master=notebook.tab("Control
 button_layout_label= customtkinter.CTkLabel(master=notebook.tab("Controller"), text="Button Layout:")
 button_layout_dropdown = customtkinter.CTkOptionMenu(master=notebook.tab("Controller"), variable=button_layout, values=full_button_layouts, command=update_image)
 
-notebook.delete("Controller")
+notebook.delete("Controller") # delete this line to readd controller options
 
 ###################
 ####### HUD #######
