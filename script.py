@@ -45,8 +45,10 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
 
     blyt_folder = os.path.abspath(os.path.join(unpacked_folder))
     file_names_stripped = []
+    
+    do_not_scale_rootpane = ["ContinueLoading", "MapFooter", "MapBG", "FadeBlack", "FadeWhite", "CommonBgParts", "ShopBG"] # panes that should be stretched across the screen, like bottom bars
    
-    do_not_scale_rootpane = ['WipeCircle']
+    rootpane_by_y = ['WipeCircle', "WipeMiss", "WipeSkip", "WipeResultGrand", "WipeWorldSelect", "WipeWorldSelectCapture", "WipeResultMain"]
 
     for root, dirs, files in os.walk(blyt_folder):
         for file_name in files:
@@ -67,19 +69,36 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         s3 = s2/s1
         
         for name in file_names_stripped:
-            if name not in do_not_scale_rootpane:
+            if name not in do_not_scale_rootpane and name not in rootpane_by_y:
                 patch_blyt(name, 'RootPane', 'scale_x', s1)
+            if name in rootpane_by_y:
+                patch_blyt(name, 'RootPane', 'scale_y', s1)
 
         patch_blyt('TalkMessage', 'PicBase', 'scale_x', 1/s1)
         patch_blyt('PlayGuide', 'PicBase', 'scale_x', 1/s1)
         patch_blyt('PlayGuideMovie', 'PicMovie', 'scale_x', 1/s1)
         patch_blyt('TalkMessage', 'PicBase', 'scale_x', 1/s1)
+        patch_blyt('PlayGuide', 'PicBase', 'scale_x', 1/s1)
+        patch_blyt('CinemaCaption', 'All', 'scale_x', s1)
+        patch_blyt('CinemaCaption', 'PicCaptureUse', 'scale_x', 1/s1)
         # patch_blyt('ContinueLoading', 'ParBG', 'shift_x', 1/s1) 
         # patch_blyt('BootLoading', 'ParBG', 'shift_x', 1/s1) 
-        # patch_blyt('ContinueLoading', 'PicFooter', 'shift_x', 1/s1) 
-        # patch_blyt('ContinueLoading', 'PicFooterBar', 'shift_x', 1/s1) 
-        # patch_blyt('ContinueLoading', 'PicProgressBar', 'shift_x', 1/s1) 
-        
+        patch_blyt('ContinueLoading', 'All', 'scale_x', s1) 
+        patch_blyt('ContinueLoading', 'PicFooter', 'scale_x', 1/s1) 
+        patch_blyt('ContinueLoading', 'PicFooterBar', 'scale_x', 1/s1) 
+        patch_blyt('ContinueLoading', 'PicProgressBar', 'scale_x', 1/s1) 
+        patch_blyt('Menu', 'Capture', 'scale_x', 1/s1) 
+        patch_blyt('OptionSelect', 'Capture', 'scale_x', 1/s1) 
+        patch_blyt('OptionMode', 'Capture', 'scale_x', 1/s1) 
+        patch_blyt('OptionData', 'Capture', 'scale_x', 1/s1) 
+        patch_blyt('OptionLanguage', 'Capture', 'scale_x', 1/s1) 
+        patch_blyt('OptionConfig', 'Capture', 'scale_x', 1/s1) 
+        patch_blyt('OptionProcess', 'Capture', 'scale_x', 1/s1) 
+        patch_blyt('TalkMessage', 'PicBase', 'scale_x', 1/s1) 
+        patch_blyt('TalkMessageOver', 'PicBase', 'scale_x', 1/s1) 
+        patch_blyt('WorldSelect', 'PicBase', 'scale_x', 1/s1) 
+        patch_blyt('StaffRoll', 'PicBG', 'scale_x', 1/s1) 
+        patch_blyt('CommonBgParts', 'PicMapCap', 'scale_x', s1) 
         
         if HUD_pos == 'corner':
             print("Shifitng elements for corner HUD")
@@ -88,8 +107,13 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
             patch_blyt('CounterCoin', 'RootPane', 'shift_x', -660*s2) 
             patch_blyt('SaveMessage', 'All', 'shift_x', -660*s2) 
             patch_blyt('CounterCollectCoin', 'RootPane', 'shift_x', -660*s2) 
+            patch_blyt('Menu', 'ParLogo', 'shift_x', -660*s2) 
+            patch_blyt('Menu', 'List', 'shift_x', -660*s2) 
+            patch_blyt('ControllerGuideSnapshot', 'Capture01', 'shift_x', -660*s2) 
             patch_blyt('CounterLifeUp', 'RootPane', 'shift_x', 660*s2) 
+            patch_blyt('KidsMode', 'RootPane', 'shift_x', 660*s2) 
             patch_blyt('CounterLifeKids', 'RootPane', 'shift_x', 660*s2) 
+            patch_blyt('WorldSelect', 'ParCounter', 'shift_x', 660*s2) 
             
     else:
         s1 = aspect_ratio / (16/9)
