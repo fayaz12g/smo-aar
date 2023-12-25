@@ -43,7 +43,7 @@ from visuals import create_visuals
 #### Create Window ####
 #######################
 
-tool_version = "1.3.3"
+tool_version = "1.3.4"
 
 root = customtkinter.CTk()
 root.title(f"Fayaz's Settings {tool_version} for Super Mario Odyssey")
