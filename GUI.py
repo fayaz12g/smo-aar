@@ -43,7 +43,7 @@ from visuals import create_visuals
 #### Create Window ####
 #######################
 
-tool_version = "1.3.1"
+tool_version = "1.3.2"
 
 root = customtkinter.CTk()
 root.title(f"Fayaz's Settings {tool_version} for Super Mario Odyssey")
@@ -645,6 +645,8 @@ button_color_dropdown = customtkinter.CTkOptionMenu(master=notebook.tab("Control
 button_layout_label= customtkinter.CTkLabel(master=notebook.tab("Controller"), text="Button Layout:")
 button_layout_dropdown = customtkinter.CTkOptionMenu(master=notebook.tab("Controller"), variable=button_layout, values=full_button_layouts, command=update_image)
 
+notebook.delete("Controller")
+
 ###################
 ####### HUD #######
 ###################
@@ -694,7 +696,7 @@ credits_label = ClickableLabel(master=notebook.tab("Credits"), text=
                     ('Utility created by fayaz\n'
                      'https://github.com/fayaz12g/totk-aar\n'
                      'ko-fi.com/fayaz12\n'
-                     'With special help from\n'
+                     '\n\nWith special help from\n'
                      'Christopher Fields (cfields7)\n'
                      'for code beautification and being a great best friend :)'))
 
