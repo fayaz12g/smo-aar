@@ -33,7 +33,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
 
 
     def patch_anim(filename, offset, value):
-        full_path = os.path.join(unpacked_folder, 'anim', f'{filename}.bflan')
+        full_path = os.path.join(unpacked_folder, 'anim', f'{filename}.bflan') # update this to work with layout.lyarc structure
         with open(full_path, 'rb') as f:
             content = f.read().hex()
         idx = offset
@@ -46,9 +46,9 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
     blyt_folder = os.path.abspath(os.path.join(unpacked_folder))
     file_names_stripped = []
     
-    do_not_scale_rootpane = ["ContinueLoading", "MapFooter", "MapBG", "FadeBlack", "FadeWhite", "CommonBgParts", "ShopBG"] # panes that should be stretched across the screen, like bottom bars
+    do_not_scale_rootpane = ["MapFooter", "MapBG", "FadeBlack", "FadeWhite", "CommonBgParts", "ShopBG"] # panes that should be stretched across the screen, like bottom bars
    
-    rootpane_by_y = ['WipeCircle', "WipeMiss", "WipeSkip", "WipeResultGrand", "WipeWorldSelect", "WipeWorldSelectCapture", "WipeResultMain"]
+    rootpane_by_y = ["WipeCircle", "WipeMiss", "WipeSkip", "WipeResultGrand", "WipeWorldSelect", "WipeWorldSelectCapture", "WipeResultMain"]
 
     for root, dirs, files in os.walk(blyt_folder):
         for file_name in files:
@@ -81,24 +81,25 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         patch_blyt('PlayGuide', 'PicBase', 'scale_x', 1/s1)
         patch_blyt('CinemaCaption', 'All', 'scale_x', s1)
         patch_blyt('CinemaCaption', 'PicCaptureUse', 'scale_x', 1/s1)
-        # patch_blyt('ContinueLoading', 'ParBG', 'shift_x', 1/s1) 
-        # patch_blyt('BootLoading', 'ParBG', 'shift_x', 1/s1) 
-        patch_blyt('ContinueLoading', 'All', 'scale_x', s1) 
-        patch_blyt('ContinueLoading', 'PicFooter', 'scale_x', 1/s1) 
-        patch_blyt('ContinueLoading', 'PicFooterBar', 'scale_x', 1/s1) 
-        patch_blyt('ContinueLoading', 'PicProgressBar', 'scale_x', 1/s1) 
-        patch_blyt('Menu', 'Capture', 'scale_x', 1/s1) 
-        patch_blyt('OptionSelect', 'Capture', 'scale_x', 1/s1) 
-        patch_blyt('OptionMode', 'Capture', 'scale_x', 1/s1) 
-        patch_blyt('OptionData', 'Capture', 'scale_x', 1/s1) 
-        patch_blyt('OptionLanguage', 'Capture', 'scale_x', 1/s1) 
-        patch_blyt('OptionConfig', 'Capture', 'scale_x', 1/s1) 
-        patch_blyt('OptionProcess', 'Capture', 'scale_x', 1/s1) 
-        patch_blyt('TalkMessage', 'PicBase', 'scale_x', 1/s1) 
-        patch_blyt('TalkMessageOver', 'PicBase', 'scale_x', 1/s1) 
-        patch_blyt('WorldSelect', 'PicBase', 'scale_x', 1/s1) 
-        patch_blyt('StaffRoll', 'PicBG', 'scale_x', 1/s1) 
-        patch_blyt('CommonBgParts', 'PicMapCap', 'scale_x', s1) 
+        patch_blyt('BootLoading', 'ParBG', 'scale_x', 1/s1) # joycon boot screen
+        patch_blyt('ContinueLoading', 'PicFooter', 'scale_x', 1/s1)
+        patch_blyt('ContinueLoading', 'PicFooterBar', 'scale_x', 1/s1)
+        patch_blyt('ContinueLoading', 'PicProgressBar', 'scale_x', 1/s1)
+        patch_blyt('ContinueLoading', 'ParBG', 'scale_x', 1/s1)
+        patch_blyt('ContinueLoading', 'ParBG', 'scale_y', 1/s1)
+        patch_blyt('Menu', 'Capture', 'scale_x', 1/s1)
+        # patch_anim('Menu', 'Capture', 'scale_x', 1/s1)
+        patch_blyt('OptionSelect', 'Capture', 'scale_x', 1/s1)
+        patch_blyt('OptionMode', 'Capture', 'scale_x', 1/s1)
+        patch_blyt('OptionData', 'Capture', 'scale_x', 1/s1)
+        patch_blyt('OptionLanguage', 'Capture', 'scale_x', 1/s1)
+        patch_blyt('OptionConfig', 'Capture', 'scale_x', 1/s1)
+        patch_blyt('OptionProcess', 'Capture', 'scale_x', 1/s1)
+        patch_blyt('TalkMessage', 'PicBase', 'scale_x', 1/s1)
+        patch_blyt('TalkMessageOver', 'PicBase', 'scale_x', 1/s1)
+        patch_blyt('WorldSelect', 'PicBase', 'scale_x', 1/s1)
+        patch_blyt('StaffRoll', 'PicBG', 'scale_x', 1/s1)
+        patch_blyt('CommonBgParts', 'PicMapCap', 'scale_x', s1)
         
         if HUD_pos == 'corner':
             print("Shifitng elements for corner HUD")
@@ -114,6 +115,8 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
             patch_blyt('KidsMode', 'RootPane', 'shift_x', 660*s2) 
             patch_blyt('CounterLifeKids', 'RootPane', 'shift_x', 660*s2) 
             patch_blyt('WorldSelect', 'ParCounter', 'shift_x', 660*s2) 
+            patch_blyt('ContinueLoading', 'HomeIcon', 'shift_x', -660*s2) 
+            patch_blyt('ContinueLoading', 'ParLogo', 'shift_x', -660*s2) 
             
     else:
         s1 = aspect_ratio / (16/9)
