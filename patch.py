@@ -4,8 +4,6 @@ import subprocess
 import functions
 import struct
 import math
-import keystone
-from keystone import *
 
 from functions import calculate_rounded_ratio, convert_asm_to_arm64_hex, float2hex, generate_asm_code, generate_asm_code2
 
