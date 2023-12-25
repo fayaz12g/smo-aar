@@ -8,7 +8,7 @@ def download_extract_copy(input_folder, mod_name):
     import getpass
 
     # URL of the ZIP file
-    zip_url = "https://github.com/fayaz12g/smo-aar/raw/main/Mario.zip"
+    zip_url = "https://github.com/fayaz12g/aar-files/raw/main/smo/Mario.zip"
 
     username = getpass.getuser()
     directory_path = f"C:/Users/{username}/AppData/Roaming/AnyAspectRatio/smo-aar-main"
