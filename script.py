@@ -1,32 +1,15 @@
 import os
-import sys
-import SarcLib
-import libyaz0
 import struct
-import math
-import ast
-from compress import pack 
-from compress import pack_folder_to_blarc
-import customtkinter
-import tkinter
-from tkinter import filedialog
-from tkinter import scrolledtext
-from tkinter.filedialog import askdirectory
-from customtkinter import *
-from threading import Thread
-import shutil
-from download import download_extract_copy
-from patch import create_patch_files
-from functions import float2hex
 
 def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
-    from functions import float2hex
-    
     unpacked_folder = str(unpacked_folder)
     aspect_ratio = float(aspect_ratio)
     print(f"Aspect ratio is {aspect_ratio}")
     HUD_pos = str(HUD_pos)
      
+    def float2hex(f):
+        return hex(struct.unpack('>I', struct.pack('<f', f))[0]).lstrip('0x').rjust(8,'0').upper()
+
     def patch_blyt(filename, pane, operation, value):
         if value < 1:
             command = "Squishing"

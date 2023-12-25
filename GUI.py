@@ -1,15 +1,8 @@
 import os
 import sys
-import SarcLib
-import libyaz0
-import struct
-import math
-import ast
 from compress import pack 
 from compress import pack_folder_to_blarc
 import customtkinter
-import tkinter
-from tkinter import filedialog
 from tkinter import scrolledtext
 from tkinter.filedialog import askdirectory
 from customtkinter import *
@@ -35,7 +28,6 @@ import getpass
 from pathlib import Path
 import sys
 import shutil
-import requests
 import psutil
 from visuals import create_visuals
 
@@ -43,7 +35,7 @@ from visuals import create_visuals
 #### Create Window ####
 #######################
 
-tool_version = "1.3.4"
+tool_version = "1.3.5"
 
 root = customtkinter.CTk()
 root.title(f"Fayaz's Settings {tool_version} for Super Mario Odyssey")
