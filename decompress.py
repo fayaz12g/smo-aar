@@ -20,9 +20,6 @@ def start_decompress(input_folder):
             extract_blarc(file_path, input_folder)
 
 def extract_blarc(file, output_folder):
-    """
-    Extract the given archive.
-    """
 
     with open(file, "rb") as inf:
         inb = inf.read()
@@ -31,6 +28,7 @@ def extract_blarc(file, output_folder):
         inb = libyaz0.decompress(inb)
 
     name = os.path.splitext(os.path.basename(file))[0]  # Extract the base name of the file without extension
+    print(f"Unpacking {name}")
     ext = SarcLib.guessFileExt(inb)
 
     if ext != ".sarc":
@@ -69,7 +67,7 @@ def extract_blarc(file, output_folder):
                 getAbsPath(checkObj, os.path.join(root, checkObj.name))
 
         for extracted_file, fileData in files:
-            print(f"Unpacking {extracted_file}")
+            # print(f"Unpacking {extracted_file}")
             extracted_file_path = os.path.join(root, extracted_file)
             with open(extracted_file_path, "wb") as out:
                 out.write(fileData)

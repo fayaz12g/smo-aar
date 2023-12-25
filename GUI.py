@@ -365,7 +365,11 @@ def select_mario_folder():
             pack_folder_to_blarc(os.path.join(romfs_folder, dir_name), szs_output_path, level)
             shutil.rmtree(dir_path)
 
-    print("We are done!")
+    if open_when_done.get() == True:
+        print ("Complete! Opening output folder.")
+        os.startfile(text_folder)
+    else:
+        print("Finished! You can now launch your emulator and enjoy.")
 
 def create_patch():
     sys.stdout = PrintRedirector(scrolled_text)

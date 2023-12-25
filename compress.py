@@ -46,7 +46,7 @@ def pack(root, endianness, level, outname):
             else:
                 filename = file
 
-            print(f"Repacking {filename}")
+            print(f"Repacking {file}")
             
 
             fullname = ''.join([root, "/", filename])
@@ -81,15 +81,15 @@ def pack(root, endianness, level, outname):
         del data
 
         if not outname:
-            outname = ''.join([root, ".szs"])
             print(f"Writing {outname}")
+            outname = ''.join([root, ".szs"])
 
     else:
         outData = data
         if not outname:
-            outname = ''.join([root, ".sarc"])
             print(f"Writing {outname}")
+            outname = ''.join([root, ".sarc"])
 
     with open(outname, "wb+") as output:
-        print(f"Writing {outname}")
+        # print(f"Writing {outname}")
         output.write(outData)
