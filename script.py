@@ -82,8 +82,8 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         # patch_blyt('PlayGuide', 'PicBase', 'scale_x', s1)
         # patch_blyt('PlayGuideMovie', 'PicMovie', 'scale_x', s1)
         # patch_blyt('PlayGuide', 'PicBase', 'scale_x', s1)
-        patch_blyt('CinemaCaption', 'All', 'scale_x', s1)
-        patch_blyt('CinemaCaption', 'PicCaptureUse', 'scale_x', 1/s1)
+        # patch_blyt('CinemaCaption', 'All', 'scale_x', s1)
+        # patch_blyt('CinemaCaption', 'PicCaptureUse', 'scale_x', 1/s1)
         patch_blyt('BootLoading', 'ParBG', 'scale_x', s1) # joycon boot screen
         patch_blyt('ContinueLoading', 'PicFooter', 'scale_x', 1/s1)
         patch_blyt('ContinueLoading', 'PicFooterBar', 'scale_x', 1/s1)
@@ -105,20 +105,20 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         
         if HUD_pos == 'corner':
             print("Shifitng elements for corner HUD")
-            patch_blyt('MapMini', 'RootPane', 'shift_x', 660*s1) 
-            patch_blyt('CounterLife', 'RootPane', 'shift_x', 660*s1) 
-            patch_blyt('CounterCoin', 'RootPane', 'shift_x', -660*s1) 
-            patch_blyt('SaveMessage', 'All', 'shift_x', -660*s1) 
-            patch_blyt('CounterCollectCoin', 'RootPane', 'shift_x', -660*s1) 
-            patch_blyt('Menu', 'ParLogo', 'shift_x', -660*s1) 
-            patch_blyt('Menu', 'List', 'shift_x', -660*s1) 
+            patch_blyt('MapMini', 'RootPane', 'shift_x', 660*s2) 
+            patch_blyt('CounterLife', 'RootPane', 'shift_x', 660*s2) 
+            patch_blyt('CounterCoin', 'RootPane', 'shift_x', -660*s2) 
+            patch_blyt('SaveMessage', 'All', 'shift_x', -660*s2) 
+            patch_blyt('CounterCollectCoin', 'RootPane', 'shift_x', -660*s2) 
+            patch_blyt('Menu', 'ParLogo', 'shift_x', -660*s2) 
+            patch_blyt('Menu', 'List', 'shift_x', -660*s2) 
             # patch_blyt('ControllerGuideSnapshot', 'Capture01', 'shift_x', -660*s2) DNW
-            patch_blyt('CounterLifeUp', 'RootPane', 'shift_x', 660*s1) 
-            patch_blyt('KidsMode', 'RootPane', 'shift_x', 660*s1) 
-            patch_blyt('CounterLifeKids', 'RootPane', 'shift_x', 660*s1) 
+            patch_blyt('CounterLifeUp', 'RootPane', 'shift_x', 660*s2) 
+            patch_blyt('KidsMode', 'RootPane', 'shift_x', 660*s2) 
+            patch_blyt('CounterLifeKids', 'RootPane', 'shift_x', 660*s2) 
             # patch_blyt('WorldSelect', 'ParCounter', 'shift_x', 660*s2) DNW
-            patch_blyt('ContinueLoading', 'HomeIcon', 'shift_x', -660*s1) 
-            patch_blyt('ContinueLoading', 'ParLogo', 'shift_x', -660*s1) 
+            patch_blyt('ContinueLoading', 'HomeIcon', 'shift_x', -660*s2) 
+            patch_blyt('ContinueLoading', 'ParLogo', 'shift_x', -660*s2) 
             
     else:
         s1 = aspect_ratio / (16/9)
