@@ -51,9 +51,9 @@ windowtitle = customtkinter.CTkLabel(master=root, font=(CTkFont, 20), text="Faya
 # Visuals
 ar_numerator = StringVar(value="16")
 ar_denominator = StringVar(value="9")
-do_disable_fxaa = BooleanVar()
-do_disable_dynamicres = BooleanVar()
-do_screenshot = StringVar()
+do_disable_fxaa = BooleanVar(value=True)
+do_disable_dynamicres = BooleanVar(value=True)
+do_screenshot = BooleanVar(value=True)
 
 
 # Legacy Visuals

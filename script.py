@@ -11,12 +11,16 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         return hex(struct.unpack('>I', struct.pack('<f', f))[0]).lstrip('0x').rjust(8,'0').upper()
 
     def patch_blyt(filename, pane, operation, value):
-        if value < 1:
-            command = "Squishing"
-        if value > 1:
-            command = "Stretching"
-        if value == 1:
-            command = "Ignoring"
+        if operation == "scale_x" or operation == "scale_y":
+            if value < 1:
+                command = "Squishing"
+            if value > 1:
+                command = "Stretching"
+            if value == 1:
+                command = "Ignoring"
+        if operation == "shift_x" or operation == "shift_y":
+            command = "Shifting"
+
         print(f"{command} {pane} of {filename}")
         offset_dict = {'shift_x': 0x40, 'shift_y': 0x48, 'scale_x': 0x70, 'scale_y': 0x78} 
         modified_name = filename + "_name"
@@ -74,47 +78,47 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
             if name in rootpane_by_y:
                 patch_blyt(name, 'RootPane', 'scale_y', s1)
 
-        patch_blyt('TalkMessage', 'PicBase', 'scale_x', 1/s1)
-        patch_blyt('PlayGuide', 'PicBase', 'scale_x', 1/s1)
-        patch_blyt('PlayGuideMovie', 'PicMovie', 'scale_x', 1/s1)
-        patch_blyt('PlayGuide', 'PicBase', 'scale_x', 1/s1)
+        patch_blyt('TalkMessage', 'PicBase', 'scale_x', s1)
+        patch_blyt('PlayGuide', 'PicBase', 'scale_x', s1)
+        patch_blyt('PlayGuideMovie', 'PicMovie', 'scale_x', s1)
+        patch_blyt('PlayGuide', 'PicBase', 'scale_x', s1)
         patch_blyt('CinemaCaption', 'All', 'scale_x', s1)
         patch_blyt('CinemaCaption', 'PicCaptureUse', 'scale_x', 1/s1)
-        patch_blyt('BootLoading', 'ParBG', 'scale_x', 1/s1) # joycon boot screen
+        patch_blyt('BootLoading', 'ParBG', 'scale_x', s1) # joycon boot screen
         patch_blyt('ContinueLoading', 'PicFooter', 'scale_x', 1/s1)
         patch_blyt('ContinueLoading', 'PicFooterBar', 'scale_x', 1/s1)
         patch_blyt('ContinueLoading', 'PicProgressBar', 'scale_x', 1/s1)
         patch_blyt('ContinueLoading', 'ParBG', 'scale_x', 1/s1)
         patch_blyt('ContinueLoading', 'ParBG', 'scale_y', 1/s1)
-        patch_blyt('Menu', 'Capture', 'scale_x', 1/s1)
+        patch_blyt('Menu', 'Capture', 'scale_x', s1)
         # patch_anim('Menu', 'Capture', 'scale_x', 1/s1)
-        patch_blyt('OptionSelect', 'Capture', 'scale_x', 1/s1)
-        patch_blyt('OptionMode', 'Capture', 'scale_x', 1/s1)
-        patch_blyt('OptionData', 'Capture', 'scale_x', 1/s1)
-        patch_blyt('OptionLanguage', 'Capture', 'scale_x', 1/s1)
-        patch_blyt('OptionConfig', 'Capture', 'scale_x', 1/s1)
-        patch_blyt('OptionProcess', 'Capture', 'scale_x', 1/s1)
-        patch_blyt('TalkMessageOver', 'PicBase', 'scale_x', 1/s1)
-        patch_blyt('WorldSelect', 'PicBase', 'scale_x', 1/s1)
-        patch_blyt('StaffRoll', 'PicBG', 'scale_x', 1/s1)
+        # patch_blyt('OptionSelect', 'Capture', 'scale_x', 1/s1)
+        patch_blyt('OptionMode', 'Capture', 'scale_x', s1)
+        patch_blyt('OptionData', 'Capture', 'scale_x', s1)
+        patch_blyt('OptionLanguage', 'Capture', 'scale_x', s1)
+        patch_blyt('OptionConfig', 'Capture', 'scale_x', s1)
+        patch_blyt('OptionProcess', 'Capture', 'scale_x', s1)
+        patch_blyt('TalkMessageOver', 'PicBase', 'scale_x', s1)
+        # patch_blyt('WorldSelect', 'PicBase', 'scale_x', 1/s1)
+        # patch_blyt('StaffRoll', 'PicBG', 'scale_x', 1/s1)
         patch_blyt('CommonBgParts', 'PicMapCap', 'scale_x', s1)
         
         if HUD_pos == 'corner':
             print("Shifitng elements for corner HUD")
-            patch_blyt('MapMini', 'RootPane', 'shift_x', 660*s2) 
-            patch_blyt('CounterLife', 'RootPane', 'shift_x', 660*s2) 
-            patch_blyt('CounterCoin', 'RootPane', 'shift_x', -660*s2) 
-            patch_blyt('SaveMessage', 'All', 'shift_x', -660*s2) 
-            patch_blyt('CounterCollectCoin', 'RootPane', 'shift_x', -660*s2) 
-            patch_blyt('Menu', 'ParLogo', 'shift_x', -660*s2) 
-            patch_blyt('Menu', 'List', 'shift_x', -660*s2) 
-            patch_blyt('ControllerGuideSnapshot', 'Capture01', 'shift_x', -660*s2) 
-            patch_blyt('CounterLifeUp', 'RootPane', 'shift_x', 660*s2) 
-            patch_blyt('KidsMode', 'RootPane', 'shift_x', 660*s2) 
-            patch_blyt('CounterLifeKids', 'RootPane', 'shift_x', 660*s2) 
-            patch_blyt('WorldSelect', 'ParCounter', 'shift_x', 660*s2) 
-            patch_blyt('ContinueLoading', 'HomeIcon', 'shift_x', -660*s2) 
-            patch_blyt('ContinueLoading', 'ParLogo', 'shift_x', -660*s2) 
+            patch_blyt('MapMini', 'RootPane', 'shift_x', 660*s1) 
+            patch_blyt('CounterLife', 'RootPane', 'shift_x', 660*s1) 
+            patch_blyt('CounterCoin', 'RootPane', 'shift_x', -660*s1) 
+            patch_blyt('SaveMessage', 'All', 'shift_x', -660*s1) 
+            patch_blyt('CounterCollectCoin', 'RootPane', 'shift_x', -660*s1) 
+            patch_blyt('Menu', 'ParLogo', 'shift_x', -660*s1) 
+            patch_blyt('Menu', 'List', 'shift_x', -660*s1) 
+            # patch_blyt('ControllerGuideSnapshot', 'Capture01', 'shift_x', -660*s2) 
+            patch_blyt('CounterLifeUp', 'RootPane', 'shift_x', 660*s1) 
+            patch_blyt('KidsMode', 'RootPane', 'shift_x', 660*s1) 
+            patch_blyt('CounterLifeKids', 'RootPane', 'shift_x', 660*s1) 
+            # patch_blyt('WorldSelect', 'ParCounter', 'shift_x', 660*s2) 
+            patch_blyt('ContinueLoading', 'HomeIcon', 'shift_x', -660*s1) 
+            patch_blyt('ContinueLoading', 'ParLogo', 'shift_x', -660*s1) 
             
     else:
         s1 = aspect_ratio / (16/9)
@@ -142,7 +146,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         patch_blyt('ContinueLoading', 'ParBG', 'scale_x', 1/s1)
         patch_blyt('Menu', 'Capture', 'scale_y', 1/s1)
         # patch_anim('Menu', 'Capture', 'scale_x', 1/s1)
-        patch_blyt('OptionSelect', 'Capture', 'scale_y', 1/s1)
+        # patch_blyt('OptionSelect', 'Capture', 'scale_y', 1/s1)
         patch_blyt('OptionMode', 'Capture', 'scale_y', 1/s1)
         patch_blyt('OptionData', 'Capture', 'scale_y', 1/s1)
         patch_blyt('OptionLanguage', 'Capture', 'scale_y', 1/s1)
