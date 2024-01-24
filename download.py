@@ -48,12 +48,12 @@ def download_extract_copy(input_folder, mod_name):
             print("Writing contents to temp folder.")
             file.write(response.content)
 
-    # Extract the ZIP file
-    extract2_folder = os.path.join(perm_folder, "Controllers")
-    print(f"Extracting zip to {extract2_folder}. This can also take a few seconds.")
-    with zipfile.ZipFile(zip2_file_source, "r") as zip_ref:
-        zip_ref.extractall(extract2_folder)
-    os.remove(zip2_file_source)
+        # Extract the ZIP file
+        extract2_folder = os.path.join(perm_folder, "Controllers")
+        print(f"Extracting zip to {extract2_folder}. This can also take a few seconds.")
+        with zipfile.ZipFile(zip2_file_source, "r") as zip_ref:
+            zip_ref.extractall(extract2_folder)
+        os.remove(zip2_file_source)
 
 
     # Copy the extracted file
