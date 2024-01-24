@@ -20,7 +20,7 @@ def controller_files(controller_type, theromfs_folder):
         return
 
     # Copy the specified folder to theromfs_folder
-    shutil.copytree(copy_source_folder, theromfs_folder)
+    shutil.copytree(copy_source_folder, os.path.join(theromfs_folder, "LocalizedData"))
 
     print(f"Controller files for {controller_type} successfully downloaded and copied to {theromfs_folder}")
 
