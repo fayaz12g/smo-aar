@@ -2,11 +2,11 @@ import requests
 import zipfile
 import io
 import os
-import shutil
-import getpass
-import shutil
 
 def controller_files(controller_type, theromfs_folder):
+    import getpass
+    import shutil
+    username = getpass.getuser()
     directory_path = f"C:/Users/{username}/AppData/Roaming/AnyAspectRatio/perm/smo/Controllers"
 
     if controller_type.lower() == "xbox":

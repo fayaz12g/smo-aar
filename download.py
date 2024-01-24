@@ -22,6 +22,7 @@ def download_extract_copy(input_folder, mod_name):
     perm_folder = f"C:/Users/{username}/AppData/Roaming/AnyAspectRatio/perm/smo"
     zip_file_source = os.path.join(perm_folder, "Mario.zip")
     zip2_file_source = os.path.join(perm_folder, "Controllers.zip")
+    controllers_folder = os.path.join(perm_folder, "Controllers")
 
     if not os.path.isfile(zip_file_source):
         # Download the ZIP file
@@ -38,7 +39,7 @@ def download_extract_copy(input_folder, mod_name):
     with zipfile.ZipFile(zip_file_source, "r") as zip_ref:
         zip_ref.extractall(extract_folder)
     
-    if not os.path.isfile(zip2_file_source):
+    if not os.path.isfile(zip2_file_source) and not os.path.isdir(controllers_folder):
         # Download the ZIP file
         print("Downloading zip file. This may take up to 10 seconds.")
         response = requests.get(zip2_url)
