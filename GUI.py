@@ -29,12 +29,13 @@ import sys
 import shutil
 import psutil
 from visuals import create_visuals
+from controller import controller_files
 
 #######################
 #### Create Window ####
 #######################
 
-tool_version = "1.3.6"
+tool_version = "1.4.0"
 
 root = customtkinter.CTk()
 root.title(f"Fayaz's Settings {tool_version} for Super Mario Odyssey")
@@ -62,14 +63,14 @@ shadow_qualities = ["8", "16", "32", "64", "128", "256", "512", "1024", "2048"]
 staticfpsoptions = ["20", "30", "60"]
 
 # Controller
-controller_types = ["Xbox", "Playstation", "Colored Dualsense", "Switch", "Steam", "Steam Deck"]
+controller_types = ["Switch", "Xbox", "Playstation"]
 
-full_button_layouts = ["Western", "Normal", "PE", "Elden Ring"]
-deck_button_layouts = ["Western", "Normal"]
+full_button_layouts = ["Normal"]
+deck_button_layouts = ["Normal"]
 
 dualsense_colors = ["Red", "White", "Blue", "Pink", "Purple", "Black"]
 
-colored_button_colors = ["Colored", "White"]
+colored_button_colors = ["White"]
 
 controller_type = StringVar(value="Switch")
 button_color = StringVar()
@@ -256,26 +257,6 @@ class PrintRedirector:
 scaling_factor = 0.762
 HUD_pos = "corner"
 
-
-    #repack the layour.lyarc folder into file
-    #repack the folder into a szs file
-    #move them to the correct place
-
-def patch_blyt(filename, pane, operation, value):
-    print(f"Scaling {pane} by {value}")
-    offset_dict = {'shift_x': 0x40, 'shift_y': 0x48, 'scale_x': 0x70, 'scale_y': 0x78} 
-    full_path = filename
-    with open(full_path, 'rb') as f:
-        content = f.read().hex()
-    start_rootpane = content.index(b'RootPane'.hex())
-    pane_hex = str(pane).encode('utf-8').hex()
-    start_pane = content.index(pane_hex, start_rootpane)
-    idx = start_pane + offset_dict[operation]
-    content_new = content[:idx] + float2hex(value) + content[idx+8:]
-    with open(full_path, 'wb') as f:
-        f.write(bytes.fromhex(content_new))
-
-
 def handle_focus_in(entry, default_text):
     if entry.get() == default_text:
         entry.delete(0, "end")
@@ -331,6 +312,10 @@ def select_mario_folder():
     visual_fixes = create_visuals(do_screenshot.get(), do_disable_fxaa.get(), do_disable_dynamicres.get())
     create_patch_files(patch_folder, str(ratio_value), str(scaling_factor), visual_fixes)
     romfs_folder = os.path.join(input_folder, mod_name, "romfs", "LayoutData")
+    theromfs_folder = os.path.join(input_folder, mod_name, "romfs")
+
+    # Download and put Controlelr Files in Place
+    controller_files(controller_type.get(), theromfs_folder)
 
     # Decomperss SZS and Lyarc Files
     for file in os.listdir(romfs_folder):
@@ -643,7 +628,7 @@ button_color_dropdown = customtkinter.CTkOptionMenu(master=notebook.tab("Control
 button_layout_label= customtkinter.CTkLabel(master=notebook.tab("Controller"), text="Button Layout:")
 button_layout_dropdown = customtkinter.CTkOptionMenu(master=notebook.tab("Controller"), variable=button_layout, values=full_button_layouts, command=update_image)
 
-notebook.delete("Controller") # delete this line to readd controller options
+# notebook.delete("Controller") # delete this line to readd controller options
 
 ###################
 ####### HUD #######
