@@ -74,10 +74,11 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         for name in file_names_stripped:
             if name in do_not_scale_rootpane:
                     print(f"Skipping RootPane scaling of {name}")
-            if name not in do_not_scale_rootpane or name not in rootpane_by_y:
+            if name not in do_not_scale_rootpane:
                 patch_blyt(name, 'RootPane', 'scale_x', s1)
             if name in rootpane_by_y:
                 patch_blyt(name, 'RootPane', 'scale_y', 1/s1)
+                patch_blyt(name, 'RootPane', 'scale_x', 1)
 
         patch_blyt('TalkMessage', 'RootPane', 'scale_x', 1/s4)
         patch_blyt('TalkMessageOver', 'RootPane', 'scale_x', 1/s4)
