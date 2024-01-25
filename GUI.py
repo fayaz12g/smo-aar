@@ -12,7 +12,7 @@ from download import download_extract_copy
 from patch import create_patch_files
 from decompress import extract_blarc
 import getpass
-from script import patch_blarc
+from oldscript import patch_blarc
 from PIL import Image
 import webbrowser
 from tkinter import *
@@ -35,7 +35,7 @@ from controller import controller_files
 #### Create Window ####
 #######################
 
-tool_version = "1.4.0"
+tool_version = "1.4.1"
 
 root = customtkinter.CTk()
 root.title(f"Fayaz's Settings {tool_version} for Super Mario Odyssey")
