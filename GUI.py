@@ -12,7 +12,7 @@ from download import download_extract_copy
 from patch import create_patch_files
 from decompress import extract_blarc
 import getpass
-from oldscript import patch_blarc
+from script import patch_blarc
 from PIL import Image
 import webbrowser
 from tkinter import *
