@@ -85,7 +85,6 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         patch_blyt('TalkMessageOver', 'Message', 'scale_x', s4)
         patch_blyt('PlayGuide', 'PicBase', 'scale_x', 1/s4)
         patch_blyt('PlayGuideMovie', 'PicMovie', 'scale_x', 1/s4)
-        patch_blyt('PlayGuide', 'Message', 'scale_x', s4)
         # patch_blyt('CinemaCaption', 'All', 'scale_x', s1)
         # patch_blyt('CinemaCaption', 'PicCaptureUse', 'scale_x', 1/s1)
         # patch_blyt('BootLoading', 'ParBG', 'scale_x', s1) # joycon boot screen
