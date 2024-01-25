@@ -50,7 +50,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
     blyt_folder = os.path.abspath(os.path.join(unpacked_folder))
     file_names_stripped = []
     
-    do_not_scale_rootpane = ['BgmList', 'OptionProcess', 'OptionConfig', 'OptionLanguage', 'OptionData', 'OptionMode', 'BootLoading', 'CinemaCaption', 'FooterParts', 'PlayGuide', 'Menu', 'MenuGuide', 'ContinueLoading', 'MapFooter', 'MapBG', 'FadeBlack', 'FadeWhite', 'CommonBgParts', 'ShopBG'] # panes that should be stretched across the screen, like bottom bars
+    do_not_scale_rootpane = ['CounterShine', 'CounterMiss', 'CounterPiece', 'CounterCollectCoin', 'CounterCoin', 'CounterLife', 'MapMini', 'CounterLifeKids', 'KidsMode', 'CounterLifeUp', 'BgmList', 'OptionProcess', 'OptionConfig', 'OptionLanguage', 'OptionData', 'OptionMode', 'BootLoading', 'CinemaCaption', 'FooterParts', 'PlayGuide', 'Menu', 'MenuGuide', 'ContinueLoading', 'MapFooter', 'MapBG', 'FadeBlack', 'FadeWhite', 'CommonBgParts', 'ShopBG'] # panes that should be stretched across the screen, like bottom bars
    
     rootpane_by_y = ["WipeCircle", "WipeMiss", "WipeSkip", "WipeResultGrand", "WipeWorldSelect", "WipeWorldSelectCapture", "WipeResultMain", 'BootLoading']
 
@@ -74,7 +74,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         for name in file_names_stripped:
             if name in do_not_scale_rootpane:
                     print(f"Skipping RootPane scaling of {name}")
-            if name not in do_not_scale_rootpane and name not in rootpane_by_y:
+            if name not in do_not_scale_rootpane or name not in rootpane_by_y:
                 patch_blyt(name, 'RootPane', 'scale_x', s1)
             if name in rootpane_by_y:
                 patch_blyt(name, 'RootPane', 'scale_y', 1/s1)
@@ -113,16 +113,6 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         # patch_anim('Menu', 'Menu_Appear', 416, 285 + 540*s3)
         # patch_anim('Menu', 'Menu_End', 416, 285 + 540*s3)
         # patch_anim('Menu', 'Menu_SelectTitle', 416, 285 + 540*s3)
-        patch_blyt('CounterLifeUp', 'All', 'scale_x', 1/s1) 
-        patch_blyt('KidsMode', 'All', 'scale_x', 1/s1) 
-        patch_blyt('CounterLifeKids', 'All', 'scale_x', 1/s1) 
-        patch_blyt('MapMini', 'All', 'scale_x', 1/s1) 
-        patch_blyt('CounterLife', 'All', 'scale_x', 1/s1) 
-        patch_blyt('CounterCoin', 'All', 'scale_x', 1/s1) 
-        patch_blyt('CounterCollectCoin', 'All', 'scale_x', 1/s1) 
-        patch_blyt('CounterPiece', 'All', 'scale_x', 1/s1) 
-        patch_blyt('CounterMiss', 'All', 'scale_x', 1/s1) 
-        patch_blyt('CounterShine', 'All', 'scale_x', 1/s1) 
 
         if HUD_pos == 'corner':
             print("Shifitng elements for corner HUD")
