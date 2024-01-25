@@ -63,7 +63,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
     blyt_folder = os.path.abspath(os.path.join(unpacked_folder))
     file_names_stripped = []
    
-    do_not_scale_rootpane = ['WipeCircle']
+    do_not_scale_rootpane = ['WipeCircle', 'CounterShine', 'CounterMiss', 'CounterPiece', 'CounterCollectCoin', 'CounterCoin', 'CounterLife', 'MapMini', 'CounterLifeKids', 'KidsMode', 'CounterLifeUp', 'CinemaCaption', 'FooterParts', 'PlayGuide', 'TalkMessage', 'TalkMessageOver']
 
     for root, dirs, files in os.walk(blyt_folder):
         for file_name in files:
@@ -91,6 +91,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         patch_blyt('PlayGuide', 'PicBase', 'scale_x', 1/s1)
         patch_blyt('PlayGuideMovie', 'PicMovie', 'scale_x', 1/s1)
         patch_blyt('TalkMessage', 'PicBase', 'scale_x', 1/s1)
+        patch_blyt('TalkMessageOver', 'PicBase', 'scale_x', 1/s1)
         # patch_blyt('ContinueLoading', 'ParBG', 'shift_x', 1/s1) 
         # patch_blyt('BootLoading', 'ParBG', 'shift_x', 1/s1) 
         # patch_blyt('ContinueLoading', 'PicFooter', 'shift_x', 1/s1) 
