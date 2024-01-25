@@ -114,6 +114,16 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         # patch_anim('Menu', 'Menu_Appear', 416, 285 + 540*s3)
         # patch_anim('Menu', 'Menu_End', 416, 285 + 540*s3)
         # patch_anim('Menu', 'Menu_SelectTitle', 416, 285 + 540*s3)
+        patch_blyt('CounterLifeUp', 'RootPane', 'scale_x', s1) 
+        patch_blyt('KidsMode', 'RootPane', 'scale_x', s1) 
+        patch_blyt('CounterLifeKids', 'RootPane', 'scale_x', s1) 
+        patch_blyt('MapMini', 'RootPane', 'scale_x', s1) 
+        patch_blyt('CounterLife', 'RootPane', 'scale_x', s1) 
+        patch_blyt('CounterCoin', 'RootPane', 'scale_x', s1) 
+        patch_blyt('CounterCollectCoin', 'RootPane', 'scale_x', s1) 
+        patch_blyt('CounterPiece', 'RootPane', 'scale_x', s1) 
+        patch_blyt('CounterMiss', 'RootPane', 'scale_x', s1) 
+        patch_blyt('CounterShine', 'RootPane', 'scale_x', s1) 
 
         if HUD_pos == 'corner':
             print("Shifitng elements for corner HUD")
