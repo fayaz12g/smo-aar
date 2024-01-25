@@ -65,7 +65,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
 
     
     if aspect_ratio >= 16/9:
-        s1 = (17/9) / aspect_ratio
+        s1 = (16/9) / aspect_ratio
         print(f"Scaling factor is set to {s1}")
         s2 = 1-s1
         s3 = s2/s1
@@ -76,7 +76,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
             if name not in do_not_scale_rootpane and name not in rootpane_by_y:
                 patch_blyt(name, 'RootPane', 'scale_x', s1)
             if name in rootpane_by_y:
-                patch_blyt(name, 'RootPane', 'scale_y', s1)
+                patch_blyt(name, 'RootPane', 'scale_y', 1/s1)
 
         patch_blyt('TalkMessage', 'PicBase', 'scale_x', 1/s1)
         patch_blyt('TalkMessageOver', 'PicBase', 'scale_x', 1/s1)
@@ -107,12 +107,12 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         # patch_blyt('StaffRoll', 'PicBG', 'scale_x', 1/s1) DNW
         # patch_blyt('CommonBgParts', 'PicMapCap', 'scale_x', 1/s1)
         patch_blyt('Menu', 'ParBG', 'scale_x', 1/s1)
-        patch_anim('Menu', 'Menu_Wait', 416, 285 + 540*s3)
-        patch_anim('Menu', 'Menu_Boot', 416, 285 + 540*s3)
-        patch_anim('Menu', 'Menu_SelectPause', 416, 285 + 540*s3)
-        patch_anim('Menu', 'Menu_Appear', 416, 285 + 540*s3)
-        patch_anim('Menu', 'Menu_End', 416, 285 + 540*s3)
-        patch_anim('Menu', 'Menu_SelectTitle', 416, 285 + 540*s3)
+        # patch_anim('Menu', 'Menu_Wait', 416, 285 + 540*s3)
+        # patch_anim('Menu', 'Menu_Boot', 416, 285 + 540*s3)
+        # patch_anim('Menu', 'Menu_SelectPause', 416, 285 + 540*s3)
+        # patch_anim('Menu', 'Menu_Appear', 416, 285 + 540*s3)
+        # patch_anim('Menu', 'Menu_End', 416, 285 + 540*s3)
+        # patch_anim('Menu', 'Menu_SelectTitle', 416, 285 + 540*s3)
         patch_blyt('CounterLifeUp', 'All', 'scale_x', s1) 
         patch_blyt('KidsMode', 'All', 'scale_x', s1) 
         patch_blyt('CounterLifeKids', 'All', 'scale_x', s1) 
