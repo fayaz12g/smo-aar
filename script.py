@@ -50,7 +50,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
     blyt_folder = os.path.abspath(os.path.join(unpacked_folder))
     file_names_stripped = []
     
-    do_not_scale_rootpane = ['CounterShine', 'CounterMiss', 'CounterPiece', 'CounterCollectCoin', 'CounterCoin', 'CounterLife', 'MapMini', 'CounterLifeKids', 'KidsMode', 'CounterLifeUp', 'BgmList', 'OptionProcess', 'OptionConfig', 'OptionLanguage', 'OptionData', 'OptionMode', 'BootLoading', 'CinemaCaption', 'FooterParts', 'PlayGuide', 'TalkMessage', 'TalkMessageOver', 'Menu', 'MenuGuide', 'ContinueLoading', 'MapFooter', 'MapBG', 'FadeBlack', 'FadeWhite', 'CommonBgParts', 'ShopBG'] # panes that should be stretched across the screen, like bottom bars
+    do_not_scale_rootpane = ['BgmList', 'OptionProcess', 'OptionConfig', 'OptionLanguage', 'OptionData', 'OptionMode', 'BootLoading', 'CinemaCaption', 'FooterParts', 'PlayGuide', 'Menu', 'MenuGuide', 'ContinueLoading', 'MapFooter', 'MapBG', 'FadeBlack', 'FadeWhite', 'CommonBgParts', 'ShopBG'] # panes that should be stretched across the screen, like bottom bars
    
     rootpane_by_y = ["WipeCircle", "WipeMiss", "WipeSkip", "WipeResultGrand", "WipeWorldSelect", "WipeWorldSelectCapture", "WipeResultMain", 'BootLoading']
 
@@ -69,6 +69,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
         print(f"Scaling factor is set to {s1}")
         s2 = 1-s1
         s3 = s2/s1
+        s4 = (16/10) / aspect_ratio
         
         for name in file_names_stripped:
             if name in do_not_scale_rootpane:
@@ -78,10 +79,10 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
             if name in rootpane_by_y:
                 patch_blyt(name, 'RootPane', 'scale_y', 1/s1)
 
-        patch_blyt('TalkMessage', 'PicBase', 'scale_x', 1/s1)
-        patch_blyt('TalkMessageOver', 'PicBase', 'scale_x', 1/s1)
-        patch_blyt('TalkMessage', 'Message', 'scale_x', s1)
-        patch_blyt('TalkMessageOver', 'Message', 'scale_x', s1)
+        patch_blyt('TalkMessage', 'PicBase', 'scale_x', 1/s4)
+        patch_blyt('TalkMessageOver', 'PicBase', 'scale_x', 1/s4)
+        patch_blyt('TalkMessage', 'Message', 'scale_x', s4)
+        patch_blyt('TalkMessageOver', 'Message', 'scale_x', s4)
         patch_blyt('PlayGuide', 'PicBase', 'scale_x', 1/s1)
         patch_blyt('PlayGuideMovie', 'PicMovie', 'scale_x', 1/s1)
         patch_blyt('PlayGuide', 'PicBase', 'scale_x', 1/s1)
