@@ -35,7 +35,7 @@ from controller import controller_files
 #### Create Window ####
 #######################
 
-tool_version = "1.4.4"
+tool_version = "2.0.0"
 
 root = customtkinter.CTk()
 root.title(f"Fayaz's Settings {tool_version} for Super Mario Odyssey")
