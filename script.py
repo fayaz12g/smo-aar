@@ -51,7 +51,7 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
     blyt_folder = os.path.abspath(os.path.join(unpacked_folder))
     file_names_stripped = []
     
-    do_not_scale_rootpane = ['CounterShine', 'CounterMiss', 'CounterPiece', 'CounterCollectCoin', 'CounterCoin', 'CounterLife', 'MapMini', 'CounterLifeKids', 'KidsMode', 'CounterLifeUp', 'BgmList', 'OptionProcess', 'OptionConfig', 'OptionLanguage', 'OptionData', 'OptionMode', 'BootLoading', 'CinemaCaption', 'FooterParts', 'PlayGuide', 'Menu', 'MenuGuide', 'ContinueLoading', 'MapFooter', 'MapBG', 'FadeBlack', 'FadeWhite', 'CommonBgParts', 'ShopBG'] # panes that should be stretched across the screen, like bottom bars
+    do_not_scale_rootpane = ['BgmList', 'OptionProcess', 'OptionConfig', 'OptionLanguage', 'OptionData', 'OptionMode', 'BootLoading', 'FooterParts', 'MapFooter', 'MapBG', 'FadeBlack', 'FadeWhite', 'CommonBgParts', 'ShopBG'] 
    
     rootpane_by_y = ["WipeCircle", "WipeMiss", "WipeSkip", "WipeResultGrand", "WipeWorldSelect", "WipeWorldSelectCapture", "WipeResultMain", 'BootLoading']
 
@@ -81,50 +81,11 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
                 patch_blyt(name, 'RootPane', 'scale_y', 1/s1)
                 patch_blyt(name, 'RootPane', 'scale_x', 1)
 
-        patch_blyt('TalkMessage', 'RootPane', 'scale_x', 1/s4)
-        patch_blyt('TalkMessageOver', 'RootPane', 'scale_x', 1/s4)
-        patch_blyt('TalkMessage', 'Message', 'scale_x', s4)
-        patch_blyt('TalkMessageOver', 'Message', 'scale_x', s4)
-        patch_blyt('PlayGuide', 'PicBase', 'scale_x', 1/s4)
-        patch_blyt('PlayGuideMovie', 'PicMovie', 'scale_x', 1/s4)
-        # patch_blyt('CinemaCaption', 'All', 'scale_x', s1)
-        # patch_blyt('CinemaCaption', 'PicCaptureUse', 'scale_x', 1/s1)
-        # patch_blyt('BootLoading', 'ParBG', 'scale_x', s1) # joycon boot screen
-        # patch_blyt('ContinueLoading', 'PicFooter', 'scale_x', 1/s1)
-        # patch_blyt('ContinueLoading', 'PicFooterBar', 'scale_x', 1/s1)
-        # patch_blyt('ContinueLoading', 'PicProgressBar', 'scale_x', 1/s1)
-        # patch_blyt('ContinueLoading', 'ParBG', 'scale_x', 1/s1)
-        # patch_blyt('ContinueLoading', 'ParBG', 'scale_y', 1/s1)
-        # patch_blyt('Menu', 'Capture', 'scale_x', s1) DNW
-        # patch_anim('Menu', 'Capture', 'scale_x', 1/s1) DNW
-        patch_blyt('Menu', 'ParLogo', 'scale_x', s1) 
-        patch_blyt('Menu', 'List', 'scale_x', s1) 
-        # patch_blyt('OptionSelect', 'Capture', 'scale_x', 1/s1) DNW
-        # patch_blyt('OptionMode', 'Capture', 'scale_x', s1)
-        # patch_blyt('OptionData', 'Capture', 'scale_x', s1)
-        # patch_blyt('OptionLanguage', 'Capture', 'scale_x', s1)
-        # patch_blyt('OptionConfig', 'Capture', 'scale_x', s1)
-        # patch_blyt('OptionProcess', 'Capture', 'scale_x', s1)
-        # patch_blyt('WorldSelect', 'PicBase', 'scale_x', 1/s1) DNW
-        # patch_blyt('StaffRoll', 'PicBG', 'scale_x', 1/s1) DNW
-        # patch_blyt('CommonBgParts', 'PicMapCap', 'scale_x', 1/s1)
+
         patch_blyt('Menu', 'ParBG', 'scale_x', 1/s1)
-        # patch_anim('Menu', 'Menu_Wait', 416, 285 + 540*s3)
-        # patch_anim('Menu', 'Menu_Boot', 416, 285 + 540*s3)
-        # patch_anim('Menu', 'Menu_SelectPause', 416, 285 + 540*s3)
-        # patch_anim('Menu', 'Menu_Appear', 416, 285 + 540*s3)
-        # patch_anim('Menu', 'Menu_End', 416, 285 + 540*s3)
-        # patch_anim('Menu', 'Menu_SelectTitle', 416, 285 + 540*s3)
-        patch_blyt('CounterLifeUp', 'RootPane', 'scale_x', s1) 
-        patch_blyt('KidsMode', 'RootPane', 'scale_x', s1) 
-        patch_blyt('CounterLifeKids', 'RootPane', 'scale_x', s1) 
-        patch_blyt('MapMini', 'RootPane', 'scale_x', s1) 
-        patch_blyt('CounterLife', 'RootPane', 'scale_x', s1) 
-        patch_blyt('CounterCoin', 'RootPane', 'scale_x', s1) 
-        patch_blyt('CounterCollectCoin', 'RootPane', 'scale_x', s1) 
-        patch_blyt('CounterPiece', 'RootPane', 'scale_x', s1) 
-        patch_blyt('CounterMiss', 'RootPane', 'scale_x', s1) 
-        patch_blyt('CounterShine', 'RootPane', 'scale_x', s1) 
+
+
+
 
         if HUD_pos == 'corner':
             print("Shifitng elements for corner HUD")
@@ -135,10 +96,9 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
             patch_blyt('CounterCoin', 'All', 'shift_x', adjust_x(-600, s1)) 
             patch_blyt('CounterShine', 'All', 'shift_x', adjust_x(-596, s1))
             patch_blyt('SaveMessage', 'All', 'shift_x', adjust_x(-600, s1)) 
-            # patch_blyt('CounterCollectCoin', 'All', 'shift_x', -660*s2) 
-            # patch_blyt('ControllerGuideSnapshot', 'Capture01', 'shift_x', -660*s2) DNW
+
             patch_blyt('KidsMode', 'All', 'shift_x', adjust_x(598, s1)) 
-            # patch_blyt('WorldSelect', 'ParCounter', 'shift_x', 660*s2) DNW
+
             patch_blyt('ContinueLoading', 'HomeIcon', 'shift_x', adjust_x(-690, s1)) 
             patch_blyt('ContinueLoading', 'ParLogo', 'shift_x', adjust_x(-510, s1)) 
             
@@ -157,45 +117,3 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
                 print(f"Scaling root pane vertically for {name}")
                 patch_blyt(name, 'RootPane', 'scale_y', s1)
              
-        # # patch_blyt('TalkMessage', 'PicBase', 'scale_y', 1/s1)
-        # patch_blyt('PlayGuide', 'PicBase', 'scale_y', 1/s1)
-        # patch_blyt('PlayGuideMovie', 'PicMovie', 'scale_y', 1/s1)
-        # patch_blyt('PlayGuide', 'PicBase', 'scale_y', 1/s1)
-        # patch_blyt('CinemaCaption', 'All', 'scale_y', s1)
-        # patch_blyt('CinemaCaption', 'PicCaptureUse', 'scale_y', 1/s1)
-        # patch_blyt('BootLoading', 'ParBG', 'scale_y', 1/s1) # joycon boot screen
-        # patch_blyt('ContinueLoading', 'PicFooter', 'scale_y', 1/s1)
-        # patch_blyt('ContinueLoading', 'PicFooterBar', 'scale_y', 1/s1)
-        # patch_blyt('ContinueLoading', 'PicProgressBar', 'scale_y', 1/s1)
-        # patch_blyt('ContinueLoading', 'ParBG', 'scale_y', 1/s1)
-        # patch_blyt('ContinueLoading', 'ParBG', 'scale_x', 1/s1)
-        # patch_blyt('Menu', 'Capture', 'scale_y', 1/s1)
-        # # patch_anim('Menu', 'Capture', 'scale_x', 1/s1)
-        # # patch_blyt('OptionSelect', 'Capture', 'scale_y', 1/s1)
-        # patch_blyt('OptionMode', 'Capture', 'scale_y', 1/s1)
-        # patch_blyt('OptionData', 'Capture', 'scale_y', 1/s1)
-        # patch_blyt('OptionLanguage', 'Capture', 'scale_y', 1/s1)
-        # patch_blyt('OptionConfig', 'Capture', 'scale_y', 1/s1)
-        # patch_blyt('OptionProcess', 'Capture', 'scale_y', 1/s1)
-        # patch_blyt('TalkMessage', 'PicBase', 'scale_y', 1/s1)
-        # patch_blyt('TalkMessageOver', 'PicBase', 'scale_y', 1/s1)
-        # patch_blyt('WorldSelect', 'PicBase', 'scale_y', 1/s1)
-        # patch_blyt('StaffRoll', 'PicBG', 'scale_y', 1/s1)
-        # patch_blyt('CommonBgParts', 'PicMapCap', 'scale_y', s1)
-
-        # if HUD_pos == 'corner':
-        #     print("Shifitng elements for corner HUD")
-        #     patch_blyt('TalkMessage', 'PicBase', 'shift_y', -540*s2)
-        #     patch_blyt('MapMini', 'RootPane', 'shift_y', 540*s2) 
-        #     patch_blyt('CounterLife', 'RootPane', 'shift_y', 540*s2) 
-        #     patch_blyt('CounterCoin', 'RootPane', 'shift_y', 540*s2) 
-        #     patch_blyt('SaveMessage', 'All', 'shift_y', -540*s2) 
-        #     patch_blyt('CounterCollectCoin', 'RootPane', 'shift_y', 540*s2) 
-        #     patch_blyt('Menu', 'ParLogo', 'shift_y', 540*s2) 
-        #     patch_blyt('CounterLifeUp', 'RootPane', 'shift_y', 540*s2) 
-        #     patch_blyt('KidsMode', 'RootPane', 'shift_y', 540*s2) 
-        #     patch_blyt('CounterLifeKids', 'RootPane', 'shift_y', 540*s2) 
-        #     patch_blyt('WorldSelect', 'ParCounter', 'shift_y', 540*s2) 
-        #     patch_blyt('ContinueLoading', 'HomeIcon', 'shift_y', 540*s2) 
-        #     patch_blyt('ContinueLoading', 'ParLogo', 'shift_y', 540*s2) 
-        #     patch_blyt('Shop', 'ParFooter', 'shift_y', -540*s2) 
