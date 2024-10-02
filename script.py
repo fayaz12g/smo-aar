@@ -1,5 +1,6 @@
 import os
 import struct
+from functions import *
 
 def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
     unpacked_folder = str(unpacked_folder)
@@ -127,22 +128,23 @@ def patch_blarc(aspect_ratio, HUD_pos, unpacked_folder):
 
         if HUD_pos == 'corner':
             print("Shifitng elements for corner HUD")
-            patch_blyt('MapMini', 'RootPane', 'shift_x', 660*s2) 
-            patch_blyt('CounterLife', 'RootPane', 'shift_x', 660*s2) 
-            patch_blyt('CounterCoin', 'RootPane', 'shift_x', -660*s2) 
-            patch_blyt('CounterShine', 'RootPane', 'shift_x', -660*s2) 
-            patch_blyt('SaveMessage', 'All', 'shift_x', -660*s2) 
-            patch_blyt('CounterCollectCoin', 'All', 'shift_x', -660*s2) 
-            patch_blyt('Menu', 'ParLogo', 'shift_x', -620) 
-            patch_blyt('Menu', 'List', 'shift_x', -700) 
+            patch_blyt('MapMini', 'All', 'shift_x', adjust_x(556, s1)) 
+            patch_blyt('CounterLife', 'All', 'shift_x', adjust_x(556, s1)) 
+            patch_blyt('CounterLifeKids', 'All', 'shift_x', adjust_x(556, s1)) 
+            patch_blyt('CounterLifeUp', 'All', 'shift_x', adjust_x(556, s1)) 
+            patch_blyt('CounterCoin', 'All', 'shift_x', adjust_x(-600, s1)) 
+            patch_blyt('CounterShine', 'All', 'shift_x', adjust_x(-596, s1))
+            patch_blyt('SaveMessage', 'All', 'shift_x', adjust_x(-600, s1)) 
+            # patch_blyt('CounterCollectCoin', 'All', 'shift_x', -660*s2) 
             # patch_blyt('ControllerGuideSnapshot', 'Capture01', 'shift_x', -660*s2) DNW
-            patch_blyt('CounterLifeUp', 'RootPane', 'shift_x', 660*s2) 
-            patch_blyt('KidsMode', 'RootPane', 'shift_x', 660*s2) 
-            patch_blyt('CounterLifeKids', 'RootPane', 'shift_x', 660*s2) 
+            patch_blyt('KidsMode', 'All', 'shift_x', adjust_x(598, s1)) 
             # patch_blyt('WorldSelect', 'ParCounter', 'shift_x', 660*s2) DNW
-            patch_blyt('ContinueLoading', 'HomeIcon', 'shift_x', -660*s2) 
-            patch_blyt('ContinueLoading', 'ParLogo', 'shift_x', -660*s2) 
+            patch_blyt('ContinueLoading', 'HomeIcon', 'shift_x', adjust_x(-690, s1)) 
+            patch_blyt('ContinueLoading', 'ParLogo', 'shift_x', adjust_x(-510, s1)) 
             
+            patch_blyt('Menu', 'List', 'shift_x', adjust_x(-700, s1)) 
+                        
+            patch_blyt('Menu', 'ParLogo', 'shift_x', adjust_x(-620, s1)) 
     else:
         s1 = aspect_ratio / (16/9)
         s2 = 1-s1
